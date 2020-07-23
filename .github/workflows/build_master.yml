@@ -6,6 +6,8 @@ name: BUILD APPLICATION
 on:
   push:
     branches: [ master ]
+  workflow_dispatch:
+    branches: [ master ]
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -31,7 +33,8 @@ jobs:
           cache-name: cache-node-modules
         with:
           # npm cache files are stored in `~/.npm` on Linux/macOS
-          path: ~/.npm
+          path: |
+            **/node_modules
           key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
             ${{ runner.os }}-build-${{ env.cache-name }}-
@@ -39,7 +42,7 @@ jobs:
             ${{ runner.os }}-
 
       - name: Install Dependencies
-        # if: steps.node-modules.outputs.cache-hit != 'true'
+        if: steps.node-modules.outputs.cache-hit != 'true'
         run: npm install
 
       - name: Build
