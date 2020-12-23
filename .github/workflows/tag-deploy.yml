@@ -27,9 +27,6 @@ jobs:
       - uses: actions/checkout@v2
         with:
           ref: ${{ github.event.inputs.version }}
-      
-      - run: echo "There is no such branch/tag/commit in the repository"
-        if: ${{ failure() }}
 
       - name: Info
         run: echo "Getting everything for ${{ github.event.inputs.version }}"
