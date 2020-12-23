@@ -52,6 +52,9 @@ jobs:
         id: package-version
         uses: martinbeentjes/npm-get-version-action@master
 
+      - name: Use conditional value
+        run: echo "package.json version ${{ steps.package-version.outputs.current-version }}"
+
       - name: Build
         run: npm run build
 
