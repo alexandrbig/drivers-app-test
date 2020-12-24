@@ -55,7 +55,7 @@ jobs:
       - name: Install Dependencies
         # skip installing dependencies if cache is ok
         if: steps.node-modules.outputs.cache-hit != 'true'
-        run: npm install
+        run: npm ci
 
       - name: Build
         run: npm run build
