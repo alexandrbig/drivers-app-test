@@ -62,12 +62,20 @@ jobs:
         run: npm run build
 
       - name: Deploy
-        uses: reggionick/s3-deploy@v3
+        uses: shallwefootball/s3-upload-action@master
         with:
-          folder: build
-          bucket: ${{ secrets.S3_BUCKET_TEST }}
-          bucket-region: ${{ secrets.S3_BUCKET_REGION_TEST }}
-          invalidation: /
-          delete-removed: true
-          no-cache: true
-          private: true
+          aws_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY}}
+          aws_bucket: ${{ secrets.S3_BUCKET_TEST }}
+          source_dir: 'build'
+
+#       - name: Deploy
+#         uses: reggionick/s3-deploy@v3
+#         with:
+#           folder: build
+#           bucket: ${{ secrets.S3_BUCKET_TEST }}
+#           bucket-region: ${{ secrets.S3_BUCKET_REGION_TEST }}
+#           invalidation: /
+#           delete-removed: true
+#           no-cache: true
+#           private: true
