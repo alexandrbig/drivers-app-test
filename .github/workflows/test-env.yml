@@ -62,12 +62,15 @@ jobs:
         run: npm run build
 
       - name: Deploy
-        uses: shallwefootball/s3-upload-action@master
+        uses: awact/s3-action@master
         with:
-          aws_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY}}
-          aws_bucket: ${{ secrets.S3_BUCKET_TEST }}
-          source_dir: 'build'
+          args: --acl public-read --follow-symlinks --delete
+        env:
+          SOURCE_DIR: './build'
+          AWS_REGION: ${{ secrets.S3_BUCKET_REGION_TEST }}
+          AWS_S3_BUCKET: ${{ secrets.S3_BUCKET_TEST }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
 #       - name: Deploy
 #         uses: reggionick/s3-deploy@v3
